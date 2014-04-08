@@ -16,3 +16,6 @@ def url_encode_no_cheating(st):
     return new
 
 tests = ['hello!', 'hello! ', '  hello! ','   ']
+for test in tests:
+    print url_encode(test)
+    print url_encode_no_cheating(test)
