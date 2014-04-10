@@ -19,5 +19,7 @@ def are_anagrams(s1, s2):
 
 print are_anagrams('abcde', 'edcba')
 print are_anagrams('hello', 'hello')
+print are_anagrams('hello', 'nothello')
+print are_anagrams('hello', 'olahe')
 print are_anagrams('', '')
 print are_anagrams(None, None)
