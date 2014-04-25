@@ -7,8 +7,8 @@ def swap_bits(num):
     print bin(num)
     odds = num << 1
     evens = num >> 1
-    odds &= 2863311530 # 1010...1010
-    evens &= (2863311530 >> 1)
+    odds &= 0xaaaaaaaa # 1010...1010
+    evens &= 0x55555555
     print bin(odds | evens)
 
 swap_bits(27)

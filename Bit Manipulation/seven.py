@@ -1,6 +1,6 @@
 #
 # 5.7
-#
+# An array A[1 n] contains all the integers from 0 to n except for one number which is missing In this problem, we cannot access an entire integer in A with a single opera- tion The elements of A are represented in binary, and the only operation we can use to access them is “fetch the jth bit of A[i]”, which takes constant time Write code to find the missing integer Can you do it in O(n) time?
 
 def log_two(num):
     power = 0
@@ -11,56 +11,7 @@ def log_two(num):
     return power
 
 
-def findMissingInt(arr):
-    #if not arr: return
-    #N = len(arr) + 1
-    #power = log_two(N)
-    #twoPower = 2 ** power
-    #diff = N - twoPower
-    ## Can optimize by keeping track of which numbers are already good
-    #freq = 0
-    #for i in arr:
-        #if ((1 << power) & i) > 0:
-            ## matches
-            #freq += 1
-    #if freq == diff:
-        ## correct # of numbers above twoPower
-        ## Thus, there should now be an even number of numbers for any bit (could I apply this to the whole problem to start with; except for the last one?
-        #freqs = [0 for x in range(power)]
-        #for i in arr:
-            #for j in range(0, power):
-                #if ((1 << j) & i) > 0 and i <= twoPower:
-                    #freqs[j] += 1
-        #print freqs
-        #num = 0
-        #for i,val in enumerate(freqs):
-            #if val % 2 != 0:
-                #num += 2 ** i
-                ## uneven
-        #print num
-
-        #power -= 1
-    #else:
-
-    #power += 1
-    #print power
-    #freqs = [0 for x in range(power)]
-    #freqs1 = [0 for x in range(power)]
-    #for i in arr:
-        #for j in range(0, power):
-            #if ((1 << j) & i) > 0:
-                #freqs1[j] += 1
-            #else:
-                #freqs[j] += 1
-    #print freqs
-    #print freqs1
-    #num = 0
-    #for i,val in enumerate(freqs1):
-        #if freqs1[i] != freqs[i]:
-            #num += 2 ** i
-            ## uneven
-    #print num
-
+def slow_find_missing_int(arr):
     if not arr: return
     N = len(arr)
     seen = set()
@@ -76,11 +27,28 @@ def findMissingInt(arr):
         if i not in seen:
             print i
 
-
+def fast_find_missing_int(arr):
+    if not arr: return
+    idx = 0
+    n = len(arr)
+    nums = set(arr)
+    power = log_two(n)
+    chosen = [x for x in arr]
+    final_num = 0
+    while idx <= power:
+        evens = [x for x in chosen if get_bit(x, idx) == 0]
+        odds = [x for x in chosen if get_bit(x, idx) == 1]
+        print evens, odds
+        if len(odds) >= len(evens):
+            # even missing
+            chosen = evens
+        else:
+            final_num += 2 ** idx
+            chosen = odds
+        idx += 1
+    print final_num
 
 def get_bit(i, j):
     return ((1 << j) & i) > 0
 
-findMissingInt([5, 1, 4, 3, 0])
-# 101 001 100 011 000
-# 010
+fast_find_missing_int([0, 2, 4, 3, 5, 6])
